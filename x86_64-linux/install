@@ -1,31 +1,34 @@
-mkdir -p repos
-cd repos
+#!/bin/bash
+set -e
 
-git clone https://github.com/wiiu-env/WiiUPluginSystem.git
-cd WiiUPluginSystem
-make install
-cd ../
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-git clone https://github.com/wiiu-env/WiiUModuleSystem.git
-cd WiiUModuleSystem
-make install
-cd ../
+(
+    cd "$SCRIPT_DIR"
 
-git clone https://github.com/wiiu-env/libkernel.git
-cd libkernel
-make install
-cd ../
+    rm -rf repos
+    mkdir -p repos
+    cd repos
 
-git clone https://github.com/wiiu-env/libnotifications.git
-cd libnotifications
-make install
-cd ../
+    clone_install() {
+        git clone "$1"
+        cd "$2"
+        make install
+        cd ..
+    }
 
-git clone https://github.com/wiiu-env/libmappedmemory.git
-cd libmappedmemory
-make install
-cd ../
+    clone_install https://github.com/wiiu-env/WiiUPluginSystem.git WiiUPluginSystem
+    clone_install https://github.com/wiiu-env/WiiUModuleSystem.git WiiUModuleSystem
+    clone_install https://github.com/wiiu-env/libkernel.git libkernel
+    clone_install https://github.com/wiiu-env/libnotifications.git libnotifications
+    clone_install https://github.com/wiiu-env/libmappedmemory.git libmappedmemory
 
-rm -rf repos
+    cd "$SCRIPT_DIR"
+    rm -rf repos
 
-cp -r x86_64-linux/bin /opt/devkitpro/devkitPPC/wups/bin
+    [ -d "/opt/devkitpro/wups" ] || {
+        echo "install failed"
+        exit 1
+    }
+    cp -r bin /opt/devkitpro/wups/bin
+)
