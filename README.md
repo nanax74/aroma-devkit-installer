@@ -1,1 +1,1 @@
-# wups-tools
+Only x86_64-linux is supported.
