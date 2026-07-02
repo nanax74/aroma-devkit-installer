@@ -1,40 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+chmod +x ./internal/install-devkitpro-pacman
+chmod +x ./internal/install-wut
+chmod +x ./internal/install-wups-wums
+chmod +x ./internal/pre-install
 
-(
-    cd "$SCRIPT_DIR"
-
-    rm -rf repos
-    mkdir -p repos
-    cd repos
-
-    clone_install() {
-        git clone "$1"
-        cd "$2"
-        make install
-        cd ..
-    }
-
-    clone_install https://github.com/wiiu-env/WiiUPluginSystem.git WiiUPluginSystem
-    clone_install https://github.com/wiiu-env/WiiUModuleSystem.git WiiUModuleSystem
-    clone_install https://github.com/wiiu-env/libkernel.git libkernel
-    clone_install https://github.com/wiiu-env/libnotifications.git libnotifications
-    clone_install https://github.com/wiiu-env/libmappedmemory.git libmappedmemory
-
-    cd "$SCRIPT_DIR"
-    rm -rf repos
-
-    [ -d "/opt/devkitpro/wups" ] || {
-        echo "install failed"
-        exit 1
-    }
-
-    cp -r bin /opt/devkitpro/wups/
-    chmod +x /opt/devkitpro/wups/bin/*
-
-    cp -r share /opt/devkitpro/wups/
-
-    echo "install succeeded"
-)
+bash ./internal/install-devkitpro-pacman
+bash ./internal/install-wut
+bash ./internal/install-wups-wums
+bash ./internal/pre-install

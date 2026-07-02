@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+
+dkp-pacman -Syu --noconfirm
+dkp-pacman -S --noconfirm wiiu-dev
