@@ -25,4 +25,6 @@ fi
 apt-get update
 apt-get install -y devkitpro-pacman
 
+export DEVKITPRO="/opt/devkitPro"
+export DEVKITPPC="/opt/devkitPro/devkitPPC"
 export PATH="/opt/devkitpro/devkitPPC/bin:$PATH"
