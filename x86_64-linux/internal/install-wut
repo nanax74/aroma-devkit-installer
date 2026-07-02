@@ -3,3 +3,5 @@ set -e
 
 dkp-pacman -Syu --noconfirm
 dkp-pacman -S --noconfirm wiiu-dev
+
+export PATH="/opt/devkitpro/portlibs/wiiu/bin:$PATH"

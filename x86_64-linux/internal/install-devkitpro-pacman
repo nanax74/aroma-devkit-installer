@@ -7,6 +7,7 @@ if ! [ $(id -u) = 0 ]; then
 fi
 
 # ensure apt is set up to work with https sources
+apt-get update
 apt-get install -y apt-transport-https
 
 # Store devkitPro gpg key locally if we don't have it already
@@ -23,3 +24,5 @@ fi
 # Finally install devkitPro pacman
 apt-get update
 apt-get install -y devkitpro-pacman
+
+export PATH="/opt/devkitpro/devkitPPC/bin:$PATH"

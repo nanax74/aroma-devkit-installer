@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
+apt-get update
+apt-get install bzip2 -y
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 (
@@ -38,3 +41,5 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
     echo "install succeeded"
 )
+
+export PATH="/opt/devkitpro/wups/bin:$PATH"
