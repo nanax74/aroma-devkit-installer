@@ -2,6 +2,38 @@
 set -e
 
 dkp-pacman -Syu --noconfirm
-dkp-pacman -S --noconfirm wiiu-dev
+dkp-pacman -S --needed --noconfirm \
+    catnip \
+    devkitppc-cmake \
+    devkitppc-rules \
+    ppc-pkg-config \
+    wiiu-cmake \
+    wiiu-pkg-config \
+    devkit-env \
+    devkitPPC-gdb \
+    devkitppc-binutils \
+    devkitppc-gcc \
+    devkitppc-mn10200-binutils \
+    general-tools \
+    wiiload \
+    wut-tools
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+(
+    cd "$SCRIPT_DIR"
+
+    rm -rf repos
+    mkdir -p repos
+    cd repos
+
+    git clone https://github.com/nanax74/wut.git
+    cd wut
+    make install
+    cd ..
+
+    cd "$SCRIPT_DIR"
+    rm -rf repos
+)
 
 export PATH="/opt/devkitpro/portlibs/wiiu/bin:$PATH"
